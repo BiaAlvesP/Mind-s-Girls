@@ -6,7 +6,6 @@ body {
   }
 
 .header{
-    position: fixed;
  padding-top: 20px;
 background-color: #57276a;
 width: 100%;
@@ -79,7 +78,6 @@ border-bottom: 5px solid #3c1949;
 
 
 .dados{
-    position: fixed;
 width: 250px;
 
 height: 700px;

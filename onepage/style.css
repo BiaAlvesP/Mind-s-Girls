@@ -5,6 +5,11 @@ body {
   width: 100%;
 }
 
+a {
+  color: white;
+  text-decoration: none;
+}
+
 .container {
   padding-top: 10px;
   padding-bottom: 10px;

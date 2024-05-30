@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mind's Girls - Login</title>
+    <link rel="stylesheet" href="assets/css/cad.css" />
+    <link
+      rel="shortcut icon"
+      href=".//assets/img/imagens/Mind_s_Girls-removebg-preview.png"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <h1 class="titulo">Mind's Girls</h1>
+        <ul class="navbar">
+          <li>INÍCIO</li>
+          <li>HISTÓRIAS</li>
+          <li>|</li>
+          <li>LOGIN</li>
+          <li>CADASTRO</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="blocos">
+      <div class="login">
+        <br /><br />
+        <h1>LOGIN</h1>
+
+        E-mail:<br />
+        <input type="text" id="input_email" class="info" />
+
+        <br /><br />
+        Senha:<br />
+        <input type="password" id="input_senha" class="info" />
+        <br /><br />
+        Ainda não possui conta? <b>Cadastre-se</b> <br /><br />
+        <button onclick="entrar()" class="botao">ENTRAR</button>
+      </div>
+
+      <div>
+        <img src=".//assets/img/Science-cuate.png" alt="" width="500px" />
+      </div>
+    </div>
+
+    <div>
+      <div></div>
+
+      <div></div>
+    </div>
+  </body>
+</html>
+
+<script>
+  function entrar() {
+    const email = input_email.value;
+    const senha = input_senha.value;
+
+    if (email == "" || senha == "") {
+      alert("Todos os campos devem ser preenchidos");
+    } else {
+      console.log("FORM LOGIN: ", email);
+      console.log("FORM SENHA: ", senha);
+
+      const data = {
+        email: email,
+        senha: senha,
+      };
+
+      fetch("http://localhost:3333/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((resposta) => {
+          console.log("ESTOU NO THEN DO entrar()!");
+
+          console.log(resposta);
+          
+          if (resposta.status == 200) {
+            console.log("status fds");
+            
+            console.log(resposta);
+
+            
+            resposta.json().then((json) => {
+              console.log(json);
+              console.log(JSON.stringify(json));
+
+              setTimeout(function () {
+                window.location = "./historias.html";
+              }, 1000); // apenas para exibir o loading
+            });
+          } else {
+            console.log("Houve um erro ao tentar realizar o login!");
+
+            resposta.text().then((texto) => {
+              console.error(texto);
+            });
+          }
+        })
+        .catch(function (erro) {
+          console.log(erro);
+        });
+    }
+  }
+</script>

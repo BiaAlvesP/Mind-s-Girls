@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mind's Girls - Cadastro</title>
+    <link rel="stylesheet" href="assets/css/cad.css" />
+    <link
+      rel="shortcut icon"
+      href="./Mind_s_Girls-removebg-preview.png"
+      type="image/x-icon"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <h1 class="titulo">Mind's Girls</h1>
+        <ul class="navbar">
+          <li>INÍCIO</li>
+          <li>HISTÓRIAS</li>
+          <li>|</li>
+          <li>LOGIN</li>
+          <li>CADASTRO</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="blocos">
+      <div>
+        <img src="./assets/img/chemistry lab-amico.png" alt="" width="500px" />
+      </div>
+
+      <div class="cad">
+        <h1>CADASTRO</h1>
+
+        Nome:<br />
+        <input
+          type="text"
+          id="input_nome"
+          class="info"
+          placeholder="ex: Bianca"
+        />
+        <br /><br />
+        E-mail:<br />
+        <input
+          type="text"
+          id="input_email"
+          class="info"
+          placeholder="ex: bianca@gmail.com "
+        />
+
+        <br /><br />
+        CPF:<br />
+        <input
+          type="text"
+          id="input_cpf"
+          class="info"
+          placeholder="somente númeos"
+        />
+        <br /><br />
+
+        Senha:<br />
+        <input type="password" id="input_senha" class="info" />
+
+        <br /><br />
+        Confimação da senha:<br />
+        <input
+          type="password"
+          id="input_confirma"
+          class="info"
+          placeholder=""
+        />
+        <br /><br />
+        Já possui conta? <b>Entrar</b> <br /><br />
+        <button onclick="cadastrar()" class="botao">CADASTRAR</button>
+      </div>
+    </div>
+
+    <div>
+      <div></div>
+
+      <div></div>
+    </div>
+  </body>
+</html>
+
+<script>
+  function cadastrar() {
+    const nome = input_nome.value;
+    const email = input_email.value;
+    const cpf = input_cpf.value;
+    const senha = input_senha.value;
+    const confirmacao = input_confirma.value;
+
+    if (
+      nome == "" ||
+      email == "" ||
+      cpf == "" ||
+      senha == "" ||
+      confirmacao == ""
+    ) {
+      alert("Todos os campos devem ser preenchidos");
+    } else {
+      if (nome.length < 3) {
+        alert("O nome deve possuir mais do que 3 caracteres");
+        return;
+      }
+
+      if (!email.includes("@") && !email.includes(".")) {
+        alert('O email deve conter "@" e "."');
+        return;
+      }
+
+      if (cpf.length != 11) {
+        alert("Erro no cpf");
+        return;
+      }
+
+      if (!senha.match(/^[A-Z][A-Za-z0-9#*@]+[0-9]+[A-Za-z0-9#*@]+$/)) {
+        alert(
+          'A senha deve começar com letra maiúscula, conter um número de 0 à 9 e incluir um caractere especial entre "@", "#" ou "*".'
+        );
+        return;
+      } else {
+        if (senha.length < 8) {
+          alert("A senha deve ter pelo menos 8 caracteres.");
+          return;
+        }
+      }
+
+      if (senha !== confirmacao) {
+        alert("A confirmação de senha não corresponde à senha digitada.");
+        return;
+      }
+
+      data = {
+        nome: nome,
+        senha: senha,
+        email: email,
+        cpf: cpf,
+      };
+
+      fetch("http://localhost:3333/cadastro", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      })
+        .then(() => {
+
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 3000)
+
+          console.log("resposta");
+        })
+
+        .catch((error) => console.error(error));
+
+      //ir para login
+    }
+  }
+</script>
